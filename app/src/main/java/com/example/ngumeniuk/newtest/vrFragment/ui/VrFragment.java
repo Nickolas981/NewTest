@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.ngumeniuk.newtest.R;
-import com.example.ngumeniuk.newtest.vrFragment.logic.VrPresenter;
+import com.example.ngumeniuk.newtest.vrFragment.presenter.VrPresenter;
+import com.example.ngumeniuk.newtest.vrFragment.view.VrView;
 import com.google.vr.sdk.widgets.pano.VrPanoramaView;
 
 import butterknife.BindView;

@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".zipFragment.ZipFragment">
+    tools:context=".zipFragment.ui.ZipFragment">
 
     <LinearLayout
-        android:background="#fff"
+        android:background="#dfdfdf"
         android:layout_width="match_parent"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:layout_height="46dp"
+        android:layout_height="56dp"
         android:orientation="horizontal">
 
         <EditText
@@ -20,14 +20,40 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:inputType="textUri"
+            android:hint="@string/insert_url"
+            android:text="@string/test_url"
             android:background="@null" />
 
         <ImageView
+            android:id="@+id/load_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_file_download_black_24dp"
             android:layout_gravity="center"/>
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <GridView
+            android:visibility="gone"
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:columnWidth="100dp"
+            android:gravity="center"
+            android:minHeight="90dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth" />
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/loading_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
 
 </LinearLayout>
