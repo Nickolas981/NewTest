@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+
 
 @Module
 public final class AppModule {
@@ -25,10 +27,9 @@ public final class AppModule {
         return context;
     }
 
-
     @Provides
     @Singleton
-    Resources provideREcources(){
+    Resources provideResources(){
         return context.getResources();
     }
 

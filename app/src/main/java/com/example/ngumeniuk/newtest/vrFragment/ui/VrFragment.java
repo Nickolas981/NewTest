@@ -1,6 +1,7 @@
 package com.example.ngumeniuk.newtest.vrFragment.ui;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,16 +12,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.ngumeniuk.newtest.R;
+import com.example.ngumeniuk.newtest.vrFragment.logic.VrPresenter;
 import com.google.vr.sdk.widgets.pano.VrPanoramaView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VrFragment extends Fragment {
+public class VrFragment extends MvpAppCompatFragment implements VrView {
 
     @BindView(R.id.vr_view)
     VrPanoramaView panoramaView;
+
+    @InjectPresenter
+    VrPresenter presenter;
 
     public VrFragment() {
     }
@@ -29,10 +36,6 @@ public class VrFragment extends Fragment {
         return new VrFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -45,18 +48,11 @@ public class VrFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        panoramaView.loadImageFromBitmap(
-                BitmapFactory.decodeResource(getResources(), R.drawable.vr_image), null);
-
+        presenter.loadImage();
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
+    public void showBitmap(Bitmap bitmap) {
+        panoramaView.loadImageFromBitmap(bitmap, null);
     }
 }
