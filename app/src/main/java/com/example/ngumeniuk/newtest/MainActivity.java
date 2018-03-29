@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.ngumeniuk.newtest.geoFragment.ui.GeoFragment;
 import com.example.ngumeniuk.newtest.vrFragment.ui.VrFragment;
 import com.example.ngumeniuk.newtest.zipFragment.ui.ZipFragment;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private VrFragment vrFragment;
     private ZipFragment zipFragment;
+    private GeoFragment geoFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -36,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 changeFragment(vrFragment);
                 return true;
             case R.id.navigation_notifications:
-                return false;
+                changeFragment(geoFragment);
+                return true;
         }
         return true;
     };
@@ -55,35 +58,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkPermissions() {
-        if( ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    123);
-        }
-        if( ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     123);
         }
     }
 
     private void changeFragment(VrFragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.show(fragment).hide(zipFragment);
+        fragmentTransaction.show(fragment).hide(zipFragment).hide(geoFragment);
         fragmentTransaction.commit();
     }
 
     private void changeFragment(ZipFragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.show(fragment).hide(vrFragment);
+        fragmentTransaction.show(fragment).hide(vrFragment).hide(geoFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void changeFragment(GeoFragment fragment) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.show(fragment).hide(vrFragment).hide(zipFragment);
         fragmentTransaction.commit();
     }
 
     private void loadRetainFragments() {
         vrFragment = (VrFragment) fragmentManager.findFragmentByTag("vr");
         zipFragment = (ZipFragment) fragmentManager.findFragmentByTag("zip");
+        geoFragment = (GeoFragment) fragmentManager.findFragmentByTag("geo");
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -94,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
         if (zipFragment == null) {
             zipFragment = ZipFragment.newInstance();
             fragmentTransaction.add(R.id.container, zipFragment, "zip");
+        }
+        if (geoFragment == null) {
+            geoFragment = GeoFragment.newInstance();
+            fragmentTransaction.add(R.id.container, geoFragment, "geo");
         }
         fragmentTransaction.commit();
     }
