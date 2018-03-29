@@ -21,6 +21,5 @@ public class App extends Application{
                 .builder()
                 .appModule(new AppModule(this))
                 .build();
-
     }
 }

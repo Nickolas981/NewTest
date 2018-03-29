@@ -1,5 +1,7 @@
 package com.example.ngumeniuk.newtest.vrFragment.logic;
 
+import android.graphics.Bitmap;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.ngumeniuk.newtest.App;
@@ -19,14 +21,25 @@ public class VrPresenter extends MvpPresenter<VrView> {
     @Inject
     ResourceBitmapDataSource dataSource;
 
+    private Bitmap bitmap = null;
+
     public VrPresenter() {
         App.appComponent.inject(this);
     }
 
     public void loadImage() {
-        dataSource.getBitmap()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(getViewState()::showBitmap);
+        if (bitmap != null){
+            getViewState().showBitmap(bitmap);
+        }else{
+            dataSource.getBitmap()
+                    .doOnNext(this::saveBitmap)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(getViewState()::showBitmap);
+        }
+    }
+
+    private void saveBitmap(Bitmap bitmap){
+        this.bitmap = bitmap;
     }
 }
