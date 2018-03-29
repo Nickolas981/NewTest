@@ -9,32 +9,24 @@ import com.example.ngumeniuk.newtest.utils.NoteDiffUtilCallback;
 
 import java.util.ArrayList;
 
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-
 public abstract class BaseListAdapter<T extends Differeble, VH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<VH> {
 
-    private ArrayList<T> list = new ArrayList<>();
+    protected ArrayList<T> list = new ArrayList<>();
 
     @SuppressLint("CheckResult")
-    void change(ArrayList<T> items) {
-        calculateDiff(new NoteDiffUtilCallback<>(list, items))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(diffResult -> {
-                    clearList();
-                    list.addAll(items);
-                    dispatchUpdates(diffResult);
-                });
+    public void change(ArrayList<T> items) {
+       DiffUtil.DiffResult res = DiffUtil.calculateDiff(new NoteDiffUtilCallback<>(list, items));
+       clearList();
+       list.addAll(items);
+       dispatchUpdates(res);
     }
 
     private void dispatchUpdates(DiffUtil.DiffResult diffResult) {
         diffResult.dispatchUpdatesTo(this);
     }
 
-    void removeAt(int position) {
+    public void removeAt(int position) {
         list.remove(position);
         notifyItemRemoved(position);
     }
@@ -53,7 +45,4 @@ public abstract class BaseListAdapter<T extends Differeble, VH extends RecyclerV
         return (long) position;
     }
 
-    private Single<DiffUtil.DiffResult> calculateDiff(NoteDiffUtilCallback<T> callback) {
-        return Single.just(DiffUtil.calculateDiff(callback));
-    }
 }

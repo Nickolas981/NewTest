@@ -12,32 +12,25 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:paddingStart="16dp"
-            android:layout_height="56dp"
-            android:orientation="horizontal">
+            android:paddingEnd="16dp"
+            android:layout_height="56dp">
 
-            <EditText
-                android:id="@+id/zip_url"
-                android:layout_width="0dp"
+            <AutoCompleteTextView
+                android:id="@+id/city_name"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:inputType="textUri"
                 android:hint="@string/city_hint"
                 android:background="@null" />
 
-            <ImageView
-                android:id="@+id/load_button"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:padding="6dp"
-                android:src="@drawable/ic_search_black_24dp"
-                android:layout_gravity="center" />
-        </LinearLayout>
+        </FrameLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="70dp"/>
