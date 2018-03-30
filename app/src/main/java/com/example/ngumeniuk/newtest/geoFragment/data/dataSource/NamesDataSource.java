@@ -11,4 +11,5 @@ public interface NamesDataSource {
     Flowable<List<CityNameModel>> getAll();
     Completable deleteById(int id);
     Completable putCityName(CityNameModel model);
+    Completable delete(CityNameModel model);
 }

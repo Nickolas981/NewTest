@@ -34,4 +34,9 @@ public class NamesRepository implements NamesDataSource{
     public Completable putCityName(CityNameModel model) {
         return Completable.fromAction(() -> namesDao.putName(model));
     }
+
+    @Override
+    public Completable delete(CityNameModel model) {
+        return Completable.fromAction(() -> namesDao.delete(model));
+    }
 }

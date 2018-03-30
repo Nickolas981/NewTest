@@ -2,6 +2,7 @@ package com.example.ngumeniuk.newtest.geoFragment.data.dao;
 
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
@@ -21,4 +22,7 @@ public interface NamesDao {
 
     @Query("DELETE FROM names WHERE id LIKE :id")
     void delete(int id);
+
+    @Delete
+    void delete(CityNameModel model);
 }

@@ -68,4 +68,11 @@ public class GeoPresenter extends MvpPresenter<GeoView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getViewState()::showNames);
     }
+
+    public void delete(CityNameModel model){
+        namesRepository.delete(model)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
 }

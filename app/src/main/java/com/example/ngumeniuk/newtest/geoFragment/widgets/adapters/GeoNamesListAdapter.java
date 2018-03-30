@@ -17,6 +17,12 @@ import butterknife.ButterKnife;
 public class GeoNamesListAdapter
         extends BaseListAdapter<CityNameModel, GeoNamesListAdapter.ViewHolder> {
 
+    OnLongClickListener listener;
+
+    public GeoNamesListAdapter(OnLongClickListener listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -27,22 +33,32 @@ public class GeoNamesListAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(list.get(position));
+        holder.bind(list.get(position), listener);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.city_name)
         TextView textView;
+        View itemView;
 
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            this.itemView = itemView;
         }
 
-        void bind(CityNameModel model){
+        void bind(CityNameModel model, OnLongClickListener listener) {
             textView.setText(model.getName());
+            itemView.setOnLongClickListener((view) -> {
+                listener.onNoteClick(model);
+                return false;
+            });
         }
 
+    }
+
+    public interface OnLongClickListener {
+        void onNoteClick(CityNameModel model);
     }
 }

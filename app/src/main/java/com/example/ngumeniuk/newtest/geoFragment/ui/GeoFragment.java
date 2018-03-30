@@ -54,7 +54,7 @@ public class GeoFragment extends MvpAppCompatFragment implements GeoView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new GeoNamesListAdapter();
+        adapter = new GeoNamesListAdapter(model -> presenter.delete(model));
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
     }
 
